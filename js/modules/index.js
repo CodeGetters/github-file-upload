@@ -11,7 +11,7 @@ window.PlaceToSelect = function (current_repos = window.tmp_userAndRepo) {
   if (!current_repos || !(current_repos instanceof Array)) return;
   let options = "";
   for (let z = 0; z < current_repos.length; z++) {
-    options += `<option value ='${current_repos[z].full_name}' >${current_repos[z].full_name}</option>`
+    options += `<option value ='${current_repos[z].full_name}' >${current_repos[z].full_name}${current_repos[z]?.visibility === "private" ? " (私仓)" : ""}</option>`
   }
   $("select[name^='userAndRepo']").html("<option value =''>--检验成功，请选择--</option>" + options)
 }
@@ -142,6 +142,7 @@ $(function () {
           full_name: repo.full_name,
           pushed_at: new Date(repo.pushed_at).getTime(),
           default_branch: repo.default_branch,
+          visibility: repo.visibility,
           // avatar_url :repo.owner.avatar_url
         })
       }
